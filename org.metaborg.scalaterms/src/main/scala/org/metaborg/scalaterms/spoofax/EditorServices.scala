@@ -40,7 +40,7 @@ trait EditorServices {
   def editorResolve(context: Context, term: IStrategoTerm): IStrategoTerm = {
     implicit val ctx = context
     FocusedStrategyInput.fromStratego(term) match {
-      case Some(fsi) => editorResolve(fsi).toStratego
+      case Some(fsi) => editorResolve(fsi).map(_.toStratego).getOrElse(null)
       case None => null
     }
   }
@@ -61,7 +61,7 @@ trait EditorServices {
 
   def editorAnalyze(generalStrategyInput: GeneralStrategyInput)(implicit context: Context): AnalysisResult
 
-  def editorResolve(focusedStrategyInput: FocusedStrategyInput)(implicit context: Context): ResolutionResult
+  def editorResolve(focusedStrategyInput: FocusedStrategyInput)(implicit context: Context): Option[ResolutionResult]
 
   def editorHover(focusedStrategyInput: FocusedStrategyInput)(implicit context: Context): HoverResult
 }
