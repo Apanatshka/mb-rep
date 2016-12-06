@@ -12,6 +12,26 @@ class Origin(val filename: String, val line: Int, val column: Int, val startOffs
   }
 
   def zero: Origin = new Origin(filename, 0, 0, 0, 0)
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Origin]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Origin =>
+      (that canEqual this) &&
+        filename == that.filename &&
+        line == that.line &&
+        column == that.column &&
+        startOffset == that.startOffset &&
+        endOffset == that.endOffset
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(filename, line, column, startOffset, endOffset)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+  override def toString = s"Origin($filename, $line, $column, $startOffset, $endOffset)"
 }
 
 object Origin {
