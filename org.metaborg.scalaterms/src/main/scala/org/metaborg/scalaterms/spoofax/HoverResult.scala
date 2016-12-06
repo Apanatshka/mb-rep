@@ -9,7 +9,7 @@ case class HoverResult(message: String) extends TermLike {
   /**
     * @return equivalent Scala ATerm representation
     */
-  override def toSTerm: STerm = STerm.String(message)
+  override def toSTerm: STerm = STerm.String(message.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 }
 
 object HoverResult extends TermLikeCompanion[HoverResult] {
