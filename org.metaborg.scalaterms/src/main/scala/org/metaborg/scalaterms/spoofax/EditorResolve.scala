@@ -18,7 +18,10 @@ trait EditorResolve {
     */
   def editorResolve(context: Context, term: IStrategoTerm): IStrategoTerm = {
     implicit val ctx = context
-    FocusedStrategyInput.fromStratego(term).flatMap(editorResolve).map(_.toStratego).orNull
+    FocusedStrategyInput.fromStratego(term) match {
+      case Some(fsi) => editorResolve(fsi).map(_.toStratego).orNull
+      case None => throw new RuntimeException("editor-resolve Scala implementation expects the 5-tuple input")
+    }
   }
 
   /**

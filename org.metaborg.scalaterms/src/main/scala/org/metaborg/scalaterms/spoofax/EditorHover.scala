@@ -17,7 +17,10 @@ trait EditorHover {
     */
   def editorHover(context: Context, term: IStrategoTerm): IStrategoTerm = {
     implicit val ctx = context
-    FocusedStrategyInput.fromStratego(term).flatMap(editorHover).map(_.toStratego).orNull
+    FocusedStrategyInput.fromStratego(term) match {
+      case Some(fsi) => editorHover(fsi).getOrElse(EditorMessage("", fsi.ast.origin.get.zero)).toStratego
+      case None => throw new RuntimeException("editor-hover Scala implementation expects the 5-tuple input")
+    }
   }
 
   /**
