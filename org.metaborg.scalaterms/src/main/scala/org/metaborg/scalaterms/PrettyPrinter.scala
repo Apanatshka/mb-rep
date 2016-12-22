@@ -9,7 +9,7 @@ object PrettyPrinter {
   private def pp(level: Int)(term: STerm): String = term match {
     case SInt(value, origin) => whitespace(level) + value.toString
     case Real(value, origin) => whitespace(level) + value.toString
-    case SString(value, origin) => whitespace(level) + value.toString
+    case SString(value, origin) => s"""${whitespace(level)}"${value.toString}""""
     case SList(value, origin) => ppSeq(level, "[", value.map(_.toSTerm), "]")
     case Tuple(value, origin) => ppSeq(level, "(", value, ")")
     case Cons(value, children, origin) => ppSeq(level, s"$value(", children, ")")
