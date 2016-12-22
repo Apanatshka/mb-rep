@@ -1,6 +1,5 @@
 package org.metaborg.scalaterms
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap
 import org.metaborg.scalaterms.STerm.{Cons, Int => SInt, List => SList, Real, Tuple, String => SString}
 
 object PrettyPrinter {
