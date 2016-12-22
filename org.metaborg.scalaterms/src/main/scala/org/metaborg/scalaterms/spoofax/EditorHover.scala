@@ -1,4 +1,5 @@
 package org.metaborg.scalaterms.spoofax
+import org.metaborg.scalaterms.STerm.{String => SString}
 import org.spoofax.interpreter.terms.IStrategoTerm
 import org.strategoxt.lang.Context
 
@@ -18,7 +19,7 @@ trait EditorHover {
   def editorHover(context: Context, term: IStrategoTerm): IStrategoTerm = {
     implicit val ctx = context
     FocusedStrategyInput.fromStratego(term) match {
-      case Some(fsi) => editorHover(fsi).getOrElse(EditorMessage("", fsi.ast.origin.get.zero)).toStratego
+      case Some(fsi) => editorHover(fsi).map(r => SString(r.message).toStratego).orNull
       case None => throw new RuntimeException("editor-hover Scala implementation expects the 5-tuple input")
     }
   }
